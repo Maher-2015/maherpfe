@@ -1,0 +1,32 @@
+name: Execute Python Script
+
+on:
+  push:
+    branches:
+      - main  # Déclencher l'exécution pour les pushes sur la branche principale
+
+jobs:
+  run-python-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Étape 1 : Récupérer le code source
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Étape 2 : Configurer Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9  # Version de Python
+
+      # Étape 3 : Installer les dépendances (si un fichier requirements.txt existe)
+      - name: Install Dependencies
+        run: |
+          if [ -f "requirements.txt" ]; then
+            pip install -r requirements.txt
+          fi
+
+      # Étape 4 : Exécuter le script Python
+      - name: Run Python Script
+        run: python script.py  # Remplacez "script.py" par le nom de votre fichier
